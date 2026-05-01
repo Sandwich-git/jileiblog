@@ -56,5 +56,34 @@ const { title, description, tags } = post.data;
     <slot />
   </article>
 
+  <section class="max-w-[720px] mx-auto mt-16 pt-8 border-t border-gray-100 dark:border-slate-800">
+    <div id="giscus-comments"></div>
+    <script>
+      var c = document.getElementById('giscus-comments');
+      if (c) {
+        var s = document.createElement('script');
+        s.src = 'https://giscus.app/client.js';
+        s.setAttribute('data-repo','Sandwich-git/jileiblog');
+        s.setAttribute('data-repo-id','R_kgDOSRuOaw');
+        s.setAttribute('data-category','Blog Comments');
+        s.setAttribute('data-category-id','DIC_kwDOSRuOa84C8ICE');
+        s.setAttribute('data-mapping','pathname');
+        s.setAttribute('data-strict','0');
+        s.setAttribute('data-reactions-enabled','1');
+        s.setAttribute('data-emit-metadata','0');
+        s.setAttribute('data-input-position','top');
+        s.setAttribute('data-theme','preferred_color_scheme');
+        s.setAttribute('data-lang','zh-CN');
+        s.setAttribute('data-loading','lazy');
+        s.setAttribute('crossorigin','anonymous');
+        s.async = true;
+        c.appendChild(s);
+      }
+    </script>
+    <noscript>
+      <p class="text-sm text-gray-400 text-center">请启用 JavaScript 查看评论。</p>
+    </noscript>
+  </section>
+
   <Footer slot="footer" lang={lang} />
 </BaseLayout>
