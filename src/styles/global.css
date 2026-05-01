@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+/* 中文排版优化 */
+:root {
+  --font-sans: -apple-system, 'PingFang SC', 'Microsoft YaHei',
+               'Noto Sans SC', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --content-width: 720px;
+}
+
+/* 全局样式 */
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 文章正文排版 */
+article {
+  font-size: 1.0625rem;     /* 17px 中文舒适字号 */
+  line-height: 1.8;         /* 中文行高大于英文 */
+  letter-spacing: 0.02em;
+  max-width: var(--content-width);
+  margin: 0 auto;
+}
+
+article h1 { font-size: 2rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1rem; }
+article h2 { font-size: 1.5rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; padding-bottom: 0.25rem; border-bottom: 1px solid #e5e7eb; }
+article h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+article p { margin-bottom: 1.25rem; color: #374151; }
+article ul, article ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+article li { margin-bottom: 0.5rem; color: #374151; }
+article a { color: #2563eb; text-decoration: underline; text-underline-offset: 2px; }
+article a:hover { color: #1d4ed8; }
+article blockquote {
+  border-left: 4px solid #e5e7eb;
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* 代码块 */
+pre {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  background: #1e293b;
+  color: #e2e8f0;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  line-height: 1.6;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: #f1f5f9;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+}
+
+pre code {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* 暗色模式 */
+.dark body { background: #0f172a; color: #e2e8f0; }
+.dark article p { color: #cbd5e1; }
+.dark article li { color: #cbd5e1; }
+.dark article h2 { border-bottom-color: #334155; }
+.dark code { background: #1e293b; }
+.dark article a { color: #60a5fa; }
+.dark article a:hover { color: #93bbfd; }
+.dark article blockquote { border-left-color: #475569; color: #94a3b8; }
+
+/* 响应式 */
+@media (max-width: 640px) {
+  article { font-size: 1rem; line-height: 1.75; padding: 0 1rem; }
+}

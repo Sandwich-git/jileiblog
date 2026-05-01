@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import PostLayout from '@layouts/PostLayout.astro';
+
+export async function getStaticPaths() {
+  const zhPosts = await getCollection('blog-zh');
+  const enPosts = await getCollection('blog-en');
+
+  const zhPaths = zhPosts.map(post => ({
+    params: { lang: 'zh', slug: post.slug },
+    props: { post, lang: 'zh' },
+  }));
+
+  const enPaths = enPosts.map(post => ({
+    params: { lang: 'en', slug: post.slug },
+    props: { post, lang: 'en' },
+  }));
+
+  return [...zhPaths, ...enPaths];
+}
+
+const { post, lang } = Astro.props;
+const { Content } = await post.render();
+---
+
+<PostLayout post={post} lang={lang}>
+  <Content />
+</PostLayout>

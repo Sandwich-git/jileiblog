@@ -1,0 +1,17 @@
+---
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const year = new Date().getFullYear();
+const text = lang === 'en'
+  ? `© ${year} jilei.blog. All rights reserved. Built with Astro & Cloudflare Pages.`
+  : `© ${year} jilei.blog。使用 Astro + Cloudflare Pages 搭建。`;
+---
+
+<footer class="border-t border-gray-100 dark:border-slate-800 mt-16">
+  <div class="max-w-5xl mx-auto px-4 py-8 text-center text-sm text-gray-400 dark:text-slate-600">
+    {text}
+  </div>
+</footer>

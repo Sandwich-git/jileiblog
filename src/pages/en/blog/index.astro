@@ -1,0 +1,30 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import PostCard from '@components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog-en');
+const publishedPosts = posts
+  .filter(p => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title="All Posts" description="All blog posts" lang="en">
+  <Header slot="header" lang="en" currentPath={Astro.url.pathname} />
+
+  <div class="max-w-5xl mx-auto px-4 py-16">
+    <h1 class="text-3xl font-bold mb-8">All Posts</h1>
+
+    {publishedPosts.length > 0 ? (
+      <div class="grid gap-4">
+        {publishedPosts.map(post => <PostCard post={post} lang="en" />)}
+      </div>
+    ) : (
+      <p class="text-gray-400 dark:text-slate-500">No posts yet. Stay tuned!</p>
+    )}
+  </div>
+
+  <Footer slot="footer" lang="en" />
+</BaseLayout>

@@ -1,0 +1,39 @@
+---
+interface Props {
+  lang: string;
+  currentPath: string;
+}
+
+const { lang, currentPath } = Astro.props;
+
+const nav = lang === 'en'
+  ? [{ label: 'Home', href: '/en/' }, { label: 'Blog', href: '/en/blog/' }]
+  : [{ label: '首页', href: '/zh/' }, { label: '文章', href: '/zh/blog/' }];
+
+const langSwitchHref = lang === 'en' ? currentPath.replace(/^\/en/, '/zh') : currentPath.replace(/^\/zh/, '/en');
+const langSwitchLabel = lang === 'en' ? '中文' : 'English';
+---
+
+<header class="border-b border-gray-100 dark:border-slate-800">
+  <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+    <a href={lang === 'en' ? '/en/' : '/zh/'} class="text-lg font-bold hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+      jilei.blog
+    </a>
+    <nav class="flex items-center gap-6">
+      {nav.map(item => (
+        <a
+          href={item.href}
+          class="text-sm text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+        >
+          {item.label}
+        </a>
+      ))}
+      <a
+        href={langSwitchHref}
+        class="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors ml-2"
+      >
+        {langSwitchLabel}
+      </a>
+    </nav>
+  </div>
+</header>

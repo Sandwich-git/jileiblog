@@ -1,0 +1,34 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import PostCard from '@components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog-en');
+const publishedPosts = posts
+  .filter(p => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title="Home" description="jilei.blog — Tips and solutions for using Claude" lang="en">
+  <Header slot="header" lang="en" currentPath={Astro.url.pathname} />
+
+  <div class="max-w-5xl mx-auto px-4 py-16">
+    <section class="mb-16">
+      <h1 class="text-4xl font-bold mb-4">jilei.blog</h1>
+      <p class="text-lg text-gray-500 dark:text-slate-400 max-w-2xl">
+        Tips, tricks, and solutions for using Claude effectively. Sharing AI workflow practices and technical blogging experiences.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-semibold mb-6">Latest Posts</h2>
+      <div class="grid gap-4">
+        {publishedPosts.map(post => <PostCard post={post} lang="en" />)}
+      </div>
+    </section>
+  </div>
+
+  <Footer slot="footer" lang="en" />
+</BaseLayout>

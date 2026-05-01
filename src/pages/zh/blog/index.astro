@@ -1,0 +1,30 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import PostCard from '@components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog-zh');
+const publishedPosts = posts
+  .filter(p => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title="文章" description="所有文章列表" lang="zh">
+  <Header slot="header" lang="zh" currentPath={Astro.url.pathname} />
+
+  <div class="max-w-5xl mx-auto px-4 py-16">
+    <h1 class="text-3xl font-bold mb-8">所有文章</h1>
+
+    {publishedPosts.length > 0 ? (
+      <div class="grid gap-4">
+        {publishedPosts.map(post => <PostCard post={post} lang="zh" />)}
+      </div>
+    ) : (
+      <p class="text-gray-400 dark:text-slate-500">还没有文章，敬请期待。</p>
+    )}
+  </div>
+
+  <Footer slot="footer" lang="zh" />
+</BaseLayout>
