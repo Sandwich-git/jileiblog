@@ -40,6 +40,58 @@ article blockquote {
   font-style: italic;
 }
 
+/* 表格 */
+article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9375rem;
+}
+
+article th, article td {
+  border: 1px solid #e5e7eb;
+  padding: 0.625rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+article th {
+  background: #f9fafb;
+  font-weight: 600;
+}
+
+article td {
+  color: #374151;
+}
+
+article tr:last-child td {
+  font-weight: 600;
+}
+
+/* 小屏表格水平滚动 */
+@media (max-width: 640px) {
+  article table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    font-size: 0.875rem;
+  }
+}
+
+/* 暗色模式表格 */
+.dark article th, .dark article td {
+  border-color: #334155;
+}
+
+.dark article th {
+  background: #1e293b;
+  color: #e2e8f0;
+}
+
+.dark article td {
+  color: #cbd5e1;
+}
+
 /* 代码块 */
 pre {
   font-family: var(--font-mono);
