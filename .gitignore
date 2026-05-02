@@ -11,3 +11,6 @@ dist/
 
 # 独立模板仓库
 template/
+
+# Obsidian vault（个人笔记和草稿，不上公共仓库）
+obsidian content/
