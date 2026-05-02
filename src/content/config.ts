@@ -9,7 +9,13 @@ const blogSchema = z.object({
   draft: z.boolean().default(false),
 });
 
+const noteSchema = z.object({
+  created: z.date().optional(),
+  tags: z.array(z.string()).default([]),
+});
+
 export const collections = {
   'blog-zh': defineCollection({ schema: blogSchema }),
   'blog-en': defineCollection({ schema: blogSchema }),
+  'notes': defineCollection({ schema: noteSchema }),
 };
