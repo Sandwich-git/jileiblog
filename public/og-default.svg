@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0f172a"/>
+  <rect x="60" y="60" width="1080" height="510" rx="20" fill="#1e293b"/>
+  <text x="600" y="260" font-family="system-ui, sans-serif" font-size="72" font-weight="bold" fill="#e2e8f0" text-anchor="middle">jilei.blog</text>
+  <text x="600" y="340" font-family="system-ui, sans-serif" font-size="32" fill="#94a3b8" text-anchor="middle">Claude 使用心得与技术分享</text>
+  <rect x="460" y="390" width="280" height="4" rx="2" fill="#2563eb"/>
+  <text x="600" y="440" font-family="system-ui, sans-serif" font-size="22" fill="#64748b" text-anchor="middle">Astro · Cloudflare · 零成本搭建</text>
+</svg>

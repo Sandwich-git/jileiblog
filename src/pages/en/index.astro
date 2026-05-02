@@ -11,7 +11,7 @@ const publishedPosts = posts
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<BaseLayout title="Home" description="jilei.blog — Tips and solutions for using Claude" lang="en">
+<BaseLayout title="" description="jilei.blog — Tips and solutions for using Claude" lang="en" isHome={true}>
   <Header slot="header" lang="en" currentPath={Astro.url.pathname} />
 
   <div class="max-w-5xl mx-auto px-4 py-16">

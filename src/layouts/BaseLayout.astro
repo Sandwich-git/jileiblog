@@ -5,9 +5,26 @@ interface Props {
   title: string;
   description: string;
   lang?: string;
+  /** Open Graph 图片 URL（可选，默认使用 /og-default.svg） */
+  ogImage?: string;
+  /** Canonical URL（可选，默认由 Astro 自动生成） */
+  canonicalURL?: string;
+  /** 文章发布日 期（用于 Open Graph 和结构化数据） */
+  pubDate?: Date;
+  /** 文章标签 */
+  tags?: string[];
+  /** 是否首页 */
+  isHome?: boolean;
 }
 
-const { title, description, lang = 'zh' } = Astro.props;
+const { title, description, lang = 'zh', ogImage, canonicalURL, pubDate, tags, isHome } = Astro.props;
+const site = 'https://jilei.blog';
+const pageUrl = canonicalURL || Astro.url.pathname;
+const fullUrl = new URL(pageUrl, site).href;
+const defaultOgImage = `${site}/og-default.svg`;
+const pageTitle = isHome ? 'jilei.blog — Claude 使用心得与技术分享' : `${title} — jilei.blog`;
+const pageType = pubDate ? 'article' : 'website';
+const hreflang = lang === 'zh' ? 'zh-CN' : 'en';
 ---
 
 <!doctype html>
@@ -16,8 +33,38 @@ const { title, description, lang = 'zh' } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title} — jilei.blog</title>
+    <link rel="canonical" href={fullUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={pageType} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={fullUrl} />
+    <meta property="og:site_name" content="jilei.blog" />
+    <meta property="og:locale" content={hreflang} />
+    <meta property="og:image" content={ogImage || defaultOgImage} />
+
+    {pageType === 'article' && pubDate && (
+      <meta property="article:published_time" content={pubDate.toISOString()} />
+    )}
+    {pageType === 'article' && tags?.map(tag => (
+      <meta property="article:tag" content={tag} />
+    ))}
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage || defaultOgImage} />
+
+    <!-- hreflang -->
+    <link rel="alternate" hrefLang="zh-CN" href={`${site}/zh/${pageUrl.replace(/^\/(zh|en)\//, '')}`} data-hflang="zh" />
+    <link rel="alternate" hrefLang="en" href={`${site}/en/${pageUrl.replace(/^\/(zh|en)\//, '')}`} data-hflang="en" />
+    <link rel="alternate" hrefLang="x-default" href={`${site}/zh/`} />
+
+    <title>{pageTitle}</title>
   </head>
   <body class="bg-white dark:bg-slate-900 text-gray-900 dark:text-slate-100 min-h-screen flex flex-col">
     <slot name="header" />

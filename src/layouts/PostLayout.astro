@@ -10,11 +10,52 @@ interface Props {
 }
 
 const { post, lang } = Astro.props;
-const { title, description, tags } = post.data;
+const { title, description, pubDate, tags } = post.data;
+const site = 'https://jilei.blog';
+const ogImage = `${site}/og-default.svg`;
+const pageUrl = `/${lang}/blog/${post.slug}/`;
+const fullUrl = new URL(pageUrl, site).href;
+const authorName = 'jilei';
 ---
 
-<BaseLayout title={title} description={description} lang={lang}>
+<BaseLayout
+  title={title}
+  description={description}
+  lang={lang}
+  ogImage={ogImage}
+  canonicalURL={pageUrl}
+  pubDate={pubDate}
+  tags={tags}
+>
   <Header slot="header" lang={lang} currentPath={Astro.url.pathname} />
+
+  <!-- JSON-LD 结构化数据 -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: title,
+    description: description,
+    author: { '@type': 'Person', name: authorName },
+    datePublished: pubDate.toISOString(),
+    dateModified: post.data.updatedDate?.toISOString() || pubDate.toISOString(),
+    url: fullUrl,
+    image: ogImage,
+    inLanguage: lang === 'zh' ? 'zh-CN' : 'en',
+    keywords: tags?.join(', ') || '',
+    publisher: {
+      '@type': 'Person',
+      name: authorName,
+    },
+  })} />
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: lang === 'en' ? 'Home' : '首页', item: `${site}/${lang}/` },
+      { '@type': 'ListItem', position: 2, name: lang === 'en' ? 'Blog' : '文章', item: `${site}/${lang}/blog/` },
+      { '@type': 'ListItem', position: 3, name: title, item: fullUrl },
+    ],
+  })} />
 
   <article class="py-12 px-4">
     <!-- 文章头部 -->
@@ -22,8 +63,8 @@ const { title, description, tags } = post.data;
       <h1 class="text-3xl font-bold mb-3">{title}</h1>
       <p class="text-gray-500 dark:text-slate-400 text-sm mb-4">{description}</p>
       <div class="flex flex-wrap gap-2 items-center text-sm text-gray-400 dark:text-slate-500">
-        <time datetime={post.data.pubDate.toISOString()}>
-          {post.data.pubDate.toLocaleDateString(
+        <time datetime={pubDate.toISOString()}>
+          {pubDate.toLocaleDateString(
             lang === 'en' ? 'en-US' : 'zh-CN',
             { year: 'numeric', month: 'long', day: 'numeric' }
           )}
