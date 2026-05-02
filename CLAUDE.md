@@ -5,16 +5,22 @@
 - Cloudflare Pages 托管
 - Giscus 评论区（基于 GitHub Discussions）
 
-## 内容存放位置
+## 目录结构
 ```
-中文博客文章 → src/content/blog-zh/*.md
-英文博客文章 → src/content/blog-en/*.md
-个人笔记     → src/content/notes/*.md  ← 不上博客
-静态资源     → public/
-图片资源     → public/images/
-组件         → src/components/
-布局         → src/layouts/
-Obsidian 配置 → .obsidian/
+blog/                       ← Git 仓库根目录
+├── obsidian content/       ← Obsidian vault 根目录
+│   ├── .obsidian/          ← Obsidian 配置
+│   ├── _templates/         ← 文章/笔记模板
+│   ├── 文章/               ← 在此写作，右键发布到博客
+│   └── 笔记/               ← 个人笔记（不上博客）
+├── src/content/
+│   ├── blog-zh/            ← 中文博客文章（自动发布目标）
+│   ├── blog-en/            ← 英文博客文章
+│   └── notes/              ← 个人笔记（不上博客）
+├── public/images/          ← 图片资源
+├── publish-to-blog.ps1     ← Obsidian 右键发布脚本
+├── deploy.ps1              ← 构建 + 提交推送
+└── CLAUDE.md
 ```
 
 ## 文章 Frontmatter 格式
@@ -48,7 +54,9 @@ npm run build                             # 生产构建
 推送到 GitHub main 分支 → Cloudflare Pages 自动构建部署
 
 ## Obsidian 集成
-- 本项目可作为 Obsidian vault 直接打开
-- `.obsidian/templates/` 内置文章/笔记模板
-- `src/content/notes/` 下的个人笔记不会出现在博客上
+- Vault 路径：`obsidian content/`（独立子目录，避免 Git 文件干扰）
+- 在 `文章/` 目录下写作，右键 → 发布到中文/英文博客
+- 发布脚本：`publish-to-blog.ps1`（复制到 src/content/blog-* + 执行 deploy.ps1）
+- 模板位置：`obsidian content/_templates/`（new-post-zh / new-post-en / new-note）
+- 社区插件依赖：Obsidian Git + Shell Commands
 - 参考 `OBSIDIAN_SETUP.md` 完成配置

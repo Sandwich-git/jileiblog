@@ -7,5 +7,6 @@
   "spellcheck": true,
   "tabSize": 2,
   "useMarkdownLinks": false,
-  "showUnsupportedFiles": false
+  "showUnsupportedFiles": false,
+  "promptDelete": false
 }
