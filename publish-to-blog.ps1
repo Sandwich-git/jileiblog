@@ -48,7 +48,6 @@ if (-not $content.StartsWith($seperator)) {
     Write-Host 'description: "文章简介"' -ForegroundColor Cyan
     Write-Host "pubDate: $(Get-Date -Format 'yyyy-MM-dd')" -ForegroundColor Cyan
     Write-Host "tags: []" -ForegroundColor Cyan
-    Write-Host "draft: true" -ForegroundColor Cyan
     Write-Host $seperator -ForegroundColor Cyan
     exit 1
 }
@@ -105,9 +104,13 @@ if (-not (Test-Path $TargetDir)) {
 Copy-Item $FilePath $TargetFile -Force
 Write-Host "[OK] Copied: $Filename -> blog-$TargetLang" -ForegroundColor Green
 
-# ---- 5. Check draft status ----
-if ($content -match "draft:\s*true") {
-    Write-Host "[Note] Article is draft:true, won't show on blog" -ForegroundColor Yellow
+# ---- 5. Ensure published article is public ----
+# Auto-remove "draft: true" so the article is always visible after publish
+$publishedContent = Get-Content $TargetFile -Raw
+if ($publishedContent -match "draft:\s*true") {
+    $publishedContent = $publishedContent -replace "(?m)^draft:\s*true\s*`n?", ""
+    Set-Content -Path $TargetFile -Value $publishedContent -NoNewline
+    Write-Host "[Auto] Removed draft:true -> article is now public" -ForegroundColor Green
 }
 
 # ---- 6. Run deploy ----
