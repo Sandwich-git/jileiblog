@@ -1,0 +1,11 @@
+{
+  "alwaysUpdateLinks": true,
+  "attachmentFolderPath": "public/images",
+  "newFileLocation": "current",
+  "showFrontmatter": true,
+  "showLineNumber": false,
+  "spellcheck": true,
+  "tabSize": 2,
+  "useMarkdownLinks": false,
+  "showUnsupportedFiles": false
+}

@@ -7,11 +7,14 @@
 
 ## 内容存放位置
 ```
-中文文章 → src/content/blog-zh/*.md
-英文文章 → src/content/blog-en/*.md
-静态资源 → public/
-组件     → src/components/
-布局     → src/layouts/
+中文博客文章 → src/content/blog-zh/*.md
+英文博客文章 → src/content/blog-en/*.md
+个人笔记     → src/content/notes/*.md  ← 不上博客
+静态资源     → public/
+图片资源     → public/images/
+组件         → src/components/
+布局         → src/layouts/
+Obsidian 配置 → .obsidian/
 ```
 
 ## 文章 Frontmatter 格式
@@ -43,3 +46,9 @@ npm run build                             # 生产构建
 
 ## 部署方式
 推送到 GitHub main 分支 → Cloudflare Pages 自动构建部署
+
+## Obsidian 集成
+- 本项目可作为 Obsidian vault 直接打开
+- `.obsidian/templates/` 内置文章/笔记模板
+- `src/content/notes/` 下的个人笔记不会出现在博客上
+- 参考 `OBSIDIAN_SETUP.md` 完成配置

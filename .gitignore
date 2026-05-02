@@ -3,3 +3,11 @@ dist/
 .env
 *.local
 .DS_Store
+
+# Obsidian (个人工作区状态和插件二进制文件不提交)
+.obsidian/workspace
+.obsidian/workspace-mobile
+.obsidian/plugins/
+
+# 独立模板仓库
+template/
