@@ -163,53 +163,102 @@ pre code {
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+/* Liquid Glass — visionOS 风格通透折射玻璃 */
 .glass-card-strong {
   position: relative;
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.14) 0%,
-    rgba(255, 255, 255, 0.04) 35%,
-    rgba(255, 255, 255, 0.16) 50%,
-    rgba(255, 255, 255, 0.03) 65%,
-    rgba(255, 255, 255, 0.08) 100%
-  );
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  /* 基底几乎完全透明 — 仅保留最淡的环境色影响 */
+  background:
+    radial-gradient(ellipse 60% 50% at 25% 40%, rgba(212, 160, 71, 0.06) 0%, transparent 55%),
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.03) 0%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.02) 100%
+    );
+  /* 光学滤镜：折射感的核心 — 轻微增亮+提高对比度，模拟玻璃透镜效果 */
+  backdrop-filter: blur(20px) brightness(1.06) contrast(1.04);
+  -webkit-backdrop-filter: blur(20px) brightness(1.06) contrast(1.04);
+  /* 极细半透边框 */
+  border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow:
     0 8px 40px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+    0 2px 12px rgba(0, 0, 0, 0.2),
+    /* 顶部高光线 — 明亮玻璃边缘 */
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    /* 底部柔光边缘 — 体积感 */
+    inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+    /* 琥珀色折射光 — 模拟光通过玻璃的色散 */
+    inset 0 0 30px rgba(212, 160, 71, 0.03);
   overflow: hidden;
 }
 
-/* 液态金属流动光效 */
+/* ===== 折射式双层反射系统 ===== */
+
+/* Layer 1: 环境反射 — 锋利的窗棂式反射带，模拟真实环境反光 */
+.glass-card-strong::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  /* 高对比度反射 — 不是柔光，而是锋利的窗棂反光 */
+  background: linear-gradient(
+    100deg,
+    transparent 15%,
+    rgba(255, 255, 255, 0.01) 28%,
+    transparent 32%,
+    rgba(255, 255, 255, 0.02) 36%,
+    rgba(255, 255, 255, 0.12) 38%,
+    rgba(255, 255, 255, 0.40) 39.5%,
+    rgba(212, 160, 71, 0.20) 41%,
+    rgba(255, 255, 255, 0.60) 42.5%,
+    rgba(255, 255, 255, 0.45) 44%,
+    rgba(255, 255, 255, 0.15) 46%,
+    transparent 49%,
+    rgba(255, 255, 255, 0.01) 52%,
+    transparent 60%
+  );
+  background-size: 300% 100%;
+  background-position: 300% 0;
+  animation: primary-shimmer 5s cubic-bezier(0.32, 0, 0.2, 1) infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Layer 2: 暖色折射带 — 模拟光穿过玻璃时的色散效果 */
 .glass-card-strong::after {
   content: '';
   position: absolute;
   inset: -1px;
   border-radius: inherit;
   background: linear-gradient(
-    105deg,
+    110deg,
     transparent 25%,
-    rgba(255, 255, 255, 0.04) 38%,
-    rgba(255, 255, 255, 0.10) 45%,
-    rgba(255, 255, 255, 0.16) 50%,
-    rgba(255, 255, 255, 0.10) 55%,
-    rgba(255, 255, 255, 0.04) 62%,
+    rgba(255, 255, 255, 0.01) 40%,
+    rgba(212, 160, 71, 0.04) 45%,
+    rgba(255, 255, 255, 0.03) 50%,
+    transparent 55%,
     transparent 75%
   );
-  background-size: 200% 100%;
-  background-position: 200% 0;
-  animation: liquid-shimmer 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  background-size: 250% 100%;
+  background-position: -250% 0;
+  animation: ambient-shimmer 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   pointer-events: none;
   z-index: 1;
 }
 
-@keyframes liquid-shimmer {
-  0% { background-position: 200% 0; }
-  50% { background-position: -30% 0; }
-  100% { background-position: -200% 0; }
+/* 主反射动画 — 快入缓出，在中间停顿模拟反射光扫过 */
+@keyframes primary-shimmer {
+  0% { background-position: 300% 0; }
+  28% { background-position: -12% 0; }
+  48% { background-position: -12% 0; }
+  100% { background-position: -300% 0; }
+}
+
+/* 环境光慢扫 */
+@keyframes ambient-shimmer {
+  0% { background-position: -250% 0; }
+  50% { background-position: -250% 0; }
+  100% { background-position: 250% 0; }
 }
 
 /* 渐变遮罩 - 视频底部淡出 */
