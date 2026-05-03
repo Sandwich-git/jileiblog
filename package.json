@@ -6,7 +6,7 @@
   "description": "jilei.blog — Claude 使用心得与技术分享",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && pagefind --site dist",
+    "build": "astro build && pagefind --site dist && node -e \"require('fs').cpSync('dist/pagefind','public/pagefind',{recursive:true})\"",
     "preview": "astro preview",
     "astro": "astro"
   },

@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Header from '@components/Header.astro';
-import Footer from '@components/Footer.astro';
 import PostCard from '@components/PostCard.astro';
 import { getCollection } from 'astro:content';
 
@@ -14,29 +13,84 @@ const publishedPosts = posts
 <BaseLayout title="" description="jilei.blog — Tips and solutions for using Claude" lang="en" isHome={true}>
   <Header slot="header" lang="en" currentPath={Astro.url.pathname} />
 
-  <div class="max-w-5xl mx-auto px-4 py-16">
-    <section class="mb-16 flex items-start gap-5">
-      <img src="/images/avatar.png" alt="avatar" class="shrink-0 w-14 h-14 rounded-xl object-cover">
-      <div>
-        <h1 class="text-4xl font-bold mb-2">jilei.blog</h1>
-        <p class="text-lg text-gray-500 dark:text-dark-muted max-w-2xl mb-3">
-          Tips, tricks, and solutions for using Claude effectively. Sharing AI workflow practices and technical blogging experiences.
-        </p>
-        <div class="flex items-center gap-4 text-sm text-gray-400 dark:text-dark-subtle">
-          <span>{publishedPosts.length} posts</span>
-          <span class="text-gray-300 dark:text-dark-border">·</span>
-          <a href="/rss.xml" class="hover:text-blue-600 dark:hover:text-dark-accent transition-colors">RSS</a>
+  <!-- Hero Section -->
+  <section class="relative h-screen flex items-center justify-center overflow-hidden">
+    <!-- Video Background -->
+    <div class="absolute inset-0 bg-[#0f1a12]">
+      <video
+        id="hero-video"
+        class="w-full h-full object-cover"
+        autoplay
+        muted
+        loop
+        playsinline
+        poster="/videos/poster.jpg"
+      ></video>
+      <div class="absolute inset-0 hero-overlay"></div>
+    </div>
+
+    <!-- Glassmorphism Card -->
+    <div class="relative z-10 glass-card-strong rounded-2xl p-8 md:p-10 max-w-lg mx-4 text-center">
+      <img
+        src="/images/avatar.png"
+        alt="avatar"
+        class="w-16 h-16 rounded-xl object-cover mx-auto mb-5 ring-2 ring-white/10"
+      >
+      <h1 class="text-4xl md:text-5xl font-bold text-white mb-3 tracking-tight">jilei.blog</h1>
+      <p class="text-base text-white/70 max-w-md mb-5 leading-relaxed">
+        Tips, tricks, and solutions for using Claude effectively. Sharing AI workflow practices and technical blogging experiences.
+      </p>
+      <div class="flex items-center justify-center gap-4 text-sm text-white/50">
+        <span>{publishedPosts.length} posts</span>
+        <span class="text-white/20">·</span>
+        <a href="/rss.xml" class="text-dark-accent hover:text-dark-accent-hover transition-colors">RSS</a>
+      </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-10 z-10 scroll-indicator">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Content Section -->
+  <div class="relative z-10 dark">
+    <div class="bg-dark-bg">
+      <div class="max-w-5xl mx-auto px-4 py-16">
+        <section data-pagefind-body>
+          <h2 class="text-xl font-semibold mb-6 text-dark-text">Latest Posts</h2>
+          <div class="grid gap-4 md:grid-cols-2">
+            {publishedPosts.map(post => <PostCard post={post} lang="en" />)}
+          </div>
+        </section>
+      </div>
+      <footer class="border-t border-dark-border mt-12">
+        <div class="max-w-5xl mx-auto px-4 py-8 text-center text-sm text-dark-subtle">
+          &copy; {new Date().getFullYear()} jilei.blog. All rights reserved. Built with Astro &amp; Cloudflare Pages.
         </div>
-      </div>
-    </section>
-
-    <section>
-      <h2 class="text-xl font-semibold mb-6">Latest Posts</h2>
-      <div class="grid gap-4 md:grid-cols-2">
-        {publishedPosts.map(post => <PostCard post={post} lang="en" />)}
-      </div>
-    </section>
+      </footer>
+    </div>
   </div>
-
-  <Footer slot="footer" lang="en" />
 </BaseLayout>
+
+<!-- Video lazy loader: load after page is fully ready -->
+<script is:inline>
+  (function() {
+    var video = document.getElementById('hero-video');
+    if (!video) return;
+    function loadVideo() {
+      video.src = '/videos/wolf.webm';
+      video.addEventListener('error', function() {
+        video.src = '/videos/wolf-bg.mp4';
+      });
+      video.load();
+    }
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadVideo, { timeout: 2000 });
+    } else {
+      setTimeout(loadVideo, 500);
+    }
+  })();
+</script>

@@ -23,7 +23,7 @@ const site = 'https://jilei.blog';
 const pageUrl = canonicalURL || Astro.url.pathname;
 const fullUrl = new URL(pageUrl, site).href;
 const defaultOgImage = `${site}/og-default.svg`;
-const pageTitle = isHome ? 'jilei.blog — Claude 使用心得与技术分享' : `${title} — jilei.blog`;
+const pageTitle = isHome ? (lang === 'en' ? 'jilei.blog — Tips and solutions for using Claude' : 'jilei.blog — Claude 使用心得与技术分享') : `${title} — jilei.blog`;
 const pageType = pubDate ? 'article' : 'website';
 const hreflang = lang === 'zh' ? 'zh-CN' : 'en';
 ---
@@ -70,7 +70,7 @@ const hreflang = lang === 'zh' ? 'zh-CN' : 'en';
     <script is:inline>
       (function() {
         var theme = localStorage.getItem('theme');
-        if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        if (theme === 'dark' || !theme) {
           document.documentElement.classList.add('dark');
         }
       })();

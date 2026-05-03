@@ -14,3 +14,6 @@ template/
 
 # Obsidian vault（个人笔记和草稿，不上公共仓库）
 obsidian content/
+
+# Pagefind 搜索索引（构建产物，不提交）
+public/pagefind/

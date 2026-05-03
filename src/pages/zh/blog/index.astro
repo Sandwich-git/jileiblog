@@ -14,7 +14,7 @@ const publishedPosts = posts
 <BaseLayout title="文章" description="所有文章列表" lang="zh">
   <Header slot="header" lang="zh" currentPath={Astro.url.pathname} />
 
-  <div class="max-w-5xl mx-auto px-4 py-16">
+  <div class="max-w-5xl mx-auto px-4 py-16 pt-20">
     <h1 class="text-3xl font-bold mb-8">所有文章</h1>
 
     {publishedPosts.length > 0 ? (
