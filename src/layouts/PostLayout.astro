@@ -7,15 +7,17 @@ import type { CollectionEntry } from 'astro:content';
 interface Props {
   post: CollectionEntry<'blog-zh'> | CollectionEntry<'blog-en'>;
   lang: string;
+  headings?: { depth: number; slug: string; text: string }[];
 }
 
-const { post, lang } = Astro.props;
+const { post, lang, headings = [] } = Astro.props;
 const { title, description, pubDate, tags } = post.data;
 const site = 'https://jilei.blog';
 const ogImage = `${site}/og-default.svg`;
 const pageUrl = `/${lang}/blog/${post.slug}/`;
 const fullUrl = new URL(pageUrl, site).href;
 const authorName = 'jilei';
+const tocHeadings = headings.filter(h => h.depth >= 2 && h.depth <= 3);
 ---
 
 <BaseLayout
@@ -57,47 +59,75 @@ const authorName = 'jilei';
     ],
   })} />
 
-  <article class="py-12 px-4">
-    <!-- 文章头部 -->
-    <header class="max-w-[720px] mx-auto mb-10">
-      <h1 class="text-3xl font-bold mb-3">{title}</h1>
-      <p class="text-gray-500 dark:text-dark-muted text-sm mb-4">{description}</p>
-      <div class="flex flex-wrap gap-2 items-center text-sm text-gray-400 dark:text-dark-subtle">
-        <time datetime={pubDate.toISOString()}>
-          {pubDate.toLocaleDateString(
-            lang === 'en' ? 'en-US' : 'zh-CN',
-            { year: 'numeric', month: 'long', day: 'numeric' }
-          )}
-        </time>
-        {post.data.updatedDate && (
-          <>
-            <span class="mx-1">·</span>
-            <span>
-              {lang === 'en' ? 'Updated ' : '更新于 '}
-              {post.data.updatedDate.toLocaleDateString(
+  <!-- 阅读进度条 -->
+  <div id="reading-progress" class="fixed top-0 left-0 h-0.5 bg-blue-500 dark:bg-dark-accent z-50" style="width:0%"></div>
+
+  <div class="max-w-5xl mx-auto px-4 py-12">
+    <div class="lg:flex lg:gap-10">
+      <!-- 文章主体 -->
+      <article class="min-w-0 flex-1 max-w-[720px] mx-auto lg:mx-0">
+        <header class="mb-10">
+          <h1 class="text-3xl font-bold mb-3">{title}</h1>
+          <p class="text-gray-500 dark:text-dark-muted text-sm mb-4">{description}</p>
+          <div class="flex flex-wrap gap-2 items-center text-sm text-gray-400 dark:text-dark-subtle">
+            <time datetime={pubDate.toISOString()}>
+              {pubDate.toLocaleDateString(
                 lang === 'en' ? 'en-US' : 'zh-CN',
                 { year: 'numeric', month: 'long', day: 'numeric' }
               )}
-            </span>
-          </>
-        )}
-        {tags.length > 0 && (
-          <div class="flex flex-wrap gap-1.5 mt-2 w-full">
-            {tags.map(tag => (
-              <span class="bg-gray-100 dark:bg-dark-surface text-gray-600 dark:text-dark-muted px-2.5 py-0.5 rounded-full text-xs">
-                {tag}
-              </span>
-            ))}
+            </time>
+            {post.data.updatedDate && (
+              <>
+                <span class="mx-1">·</span>
+                <span>
+                  {lang === 'en' ? 'Updated ' : '更新于 '}
+                  {post.data.updatedDate.toLocaleDateString(
+                    lang === 'en' ? 'en-US' : 'zh-CN',
+                    { year: 'numeric', month: 'long', day: 'numeric' }
+                  )}
+                </span>
+              </>
+            )}
+            {tags.length > 0 && (
+              <div class="flex flex-wrap gap-1.5 mt-2 w-full">
+                {tags.map(tag => (
+                  <a href={`/${lang}/blog/tags/${encodeURIComponent(tag)}/`}
+                     class="bg-gray-100 dark:bg-dark-surface text-gray-600 dark:text-dark-muted hover:bg-gray-200 dark:hover:bg-dark-hover px-2.5 py-0.5 rounded-full text-xs transition-colors">
+                    {tag}
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
-        )}
-      </div>
-    </header>
+        </header>
 
-    <!-- 正文 -->
-    <slot />
-  </article>
+        <slot />
+      </article>
 
-  <section class="max-w-[720px] mx-auto mt-16 pt-8 border-t border-gray-100 dark:border-dark-border">
+      <!-- 目录侧边栏 -->
+      {tocHeadings.length > 0 && (
+        <aside class="hidden lg:block w-56 shrink-0">
+          <div class="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto">
+            <h4 class="text-sm font-semibold mb-3 text-gray-900 dark:text-dark-text">
+              {lang === 'en' ? 'On this page' : '目录'}
+            </h4>
+            <nav class="space-y-1.5">
+              {tocHeadings.map(h => (
+                <a href={`#${h.slug}`}
+                   class="block text-sm text-gray-500 dark:text-dark-muted hover:text-blue-600 dark:hover:text-dark-accent transition-colors"
+                   style={`padding-left: ${(h.depth - 2) * 0.75}rem`}>
+                  {h.text}
+                </a>
+              ))}
+            </nav>
+          </div>
+        </aside>
+      )}
+    </div>
+  </div>
+
+  <!-- 评论区 -->
+  <section class="max-w-[720px] mx-auto mt-8 pt-8 px-4 border-t border-gray-100 dark:border-dark-border">
     <div id="giscus-comments"></div>
     <script>
       var c = document.getElementById('giscus-comments');
@@ -128,4 +158,17 @@ const authorName = 'jilei';
   </section>
 
   <Footer slot="footer" lang={lang} />
+
+  <script is:inline>
+    (function() {
+      var bar = document.getElementById('reading-progress');
+      if (!bar) return;
+      window.addEventListener('scroll', function() {
+        var scrollTop = window.scrollY;
+        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        var pct = docHeight > 0 ? Math.min(scrollTop / docHeight * 100, 100) : 0;
+        bar.style.width = pct + '%';
+      });
+    })();
+  </script>
 </BaseLayout>

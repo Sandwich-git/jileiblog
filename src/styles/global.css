@@ -35,7 +35,6 @@ article {
   line-height: 1.8;         /* 中文行高大于英文 */
   letter-spacing: 0.02em;
   max-width: var(--content-width);
-  margin: 0 auto;
 }
 
 article h1 { font-size: 2rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1rem; }

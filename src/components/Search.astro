@@ -1,0 +1,71 @@
+<!-- 全站搜索 — 基于 Pagefind -->
+<style is:global>
+  #pagefind-search {
+    --pagefind-ui-text: #111827;
+    --pagefind-ui-background: #ffffff;
+    --pagefind-ui-border: #e5e7eb;
+    --pagefind-ui-tag: #f3f4f6;
+    --pagefind-ui-primary: #2563eb;
+  }
+  .dark #pagefind-search {
+    --pagefind-ui-text: #e8e8ed;
+    --pagefind-ui-background: #1e1e22;
+    --pagefind-ui-border: #2d2d33;
+    --pagefind-ui-tag: #26262b;
+    --pagefind-ui-primary: #7ba3f5;
+  }
+</style>
+
+<div id="search-dialog" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true">
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" onclick="closeSearch()"></div>
+  <div class="fixed top-[12%] left-1/2 -translate-x-1/2 w-[92vw] max-w-[640px]">
+    <div class="bg-white dark:bg-dark-bg rounded-xl shadow-2xl border border-gray-200 dark:border-dark-border p-5">
+      <div id="pagefind-search"></div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function() {
+    var pfUI = null;
+    var pfLoaded = false;
+
+    window.openSearch = function() {
+      var dialog = document.getElementById('search-dialog');
+      if (!dialog) return;
+      dialog.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      if (!pfLoaded) {
+        pfLoaded = true;
+        var css = document.createElement('link');
+        css.rel = 'stylesheet';
+        css.href = '/pagefind/pagefind-ui.css';
+        document.head.appendChild(css);
+        var js = document.createElement('script');
+        js.src = '/pagefind/pagefind-ui.js';
+        js.onload = function() {
+          try {
+            pfUI = new PagefindUI({ element: '#pagefind-search', showImages: false, resetStyles: false });
+          } catch(e) {}
+        };
+        document.body.appendChild(js);
+      } else {
+        setTimeout(function() {
+          var input = document.querySelector('#pagefind-search input');
+          if (input) input.focus();
+        }, 100);
+      }
+    };
+
+    window.closeSearch = function() {
+      var dialog = document.getElementById('search-dialog');
+      if (!dialog) return;
+      dialog.classList.add('hidden');
+      document.body.style.overflow = '';
+    };
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeSearch();
+    });
+  })();
+</script>

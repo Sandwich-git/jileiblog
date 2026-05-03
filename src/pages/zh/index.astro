@@ -15,18 +15,26 @@ const publishedPosts = posts
   <Header slot="header" lang="zh" currentPath={Astro.url.pathname} />
 
   <div class="max-w-5xl mx-auto px-4 py-16">
-    <!-- 简介 -->
-    <section class="mb-16">
-      <h1 class="text-4xl font-bold mb-4">jilei.blog</h1>
-      <p class="text-lg text-gray-500 dark:text-dark-muted max-w-2xl">
-        记录使用 Claude 过程中的心得、技巧与问题解决方案。分享技术博客搭建经验与 AI 工作流实践。
-      </p>
+    <!-- Hero -->
+    <section class="mb-16 flex items-start gap-5">
+      <img src="/images/avatar.png" alt="avatar" class="shrink-0 w-14 h-14 rounded-xl object-cover">
+      <div>
+        <h1 class="text-4xl font-bold mb-2">jilei.blog</h1>
+        <p class="text-lg text-gray-500 dark:text-dark-muted max-w-2xl mb-3">
+          记录使用 Claude 过程中的心得、技巧与问题解决方案。分享技术博客搭建经验与 AI 工作流实践。
+        </p>
+        <div class="flex items-center gap-4 text-sm text-gray-400 dark:text-dark-subtle">
+          <span>{publishedPosts.length} 篇文章</span>
+          <span class="text-gray-300 dark:text-dark-border">·</span>
+          <a href="/rss.xml" class="hover:text-blue-600 dark:hover:text-dark-accent transition-colors">RSS</a>
+        </div>
+      </div>
     </section>
 
     <!-- 最新文章 -->
     <section>
       <h2 class="text-xl font-semibold mb-6">最新文章</h2>
-      <div class="grid gap-4">
+      <div class="grid gap-4 md:grid-cols-2">
         {publishedPosts.map(post => <PostCard post={post} lang="zh" />)}
       </div>
     </section>

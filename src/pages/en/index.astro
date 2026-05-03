@@ -15,16 +15,24 @@ const publishedPosts = posts
   <Header slot="header" lang="en" currentPath={Astro.url.pathname} />
 
   <div class="max-w-5xl mx-auto px-4 py-16">
-    <section class="mb-16">
-      <h1 class="text-4xl font-bold mb-4">jilei.blog</h1>
-      <p class="text-lg text-gray-500 dark:text-dark-muted max-w-2xl">
-        Tips, tricks, and solutions for using Claude effectively. Sharing AI workflow practices and technical blogging experiences.
-      </p>
+    <section class="mb-16 flex items-start gap-5">
+      <img src="/images/avatar.png" alt="avatar" class="shrink-0 w-14 h-14 rounded-xl object-cover">
+      <div>
+        <h1 class="text-4xl font-bold mb-2">jilei.blog</h1>
+        <p class="text-lg text-gray-500 dark:text-dark-muted max-w-2xl mb-3">
+          Tips, tricks, and solutions for using Claude effectively. Sharing AI workflow practices and technical blogging experiences.
+        </p>
+        <div class="flex items-center gap-4 text-sm text-gray-400 dark:text-dark-subtle">
+          <span>{publishedPosts.length} posts</span>
+          <span class="text-gray-300 dark:text-dark-border">·</span>
+          <a href="/rss.xml" class="hover:text-blue-600 dark:hover:text-dark-accent transition-colors">RSS</a>
+        </div>
+      </div>
     </section>
 
     <section>
       <h2 class="text-xl font-semibold mb-6">Latest Posts</h2>
-      <div class="grid gap-4">
+      <div class="grid gap-4 md:grid-cols-2">
         {publishedPosts.map(post => <PostCard post={post} lang="en" />)}
       </div>
     </section>

@@ -11,12 +11,13 @@ const { title, description, pubDate, tags } = post.data;
 const href = `/${lang}/blog/${post.slug}/`;
 ---
 
-<a
-  href={href}
+<div
   class="block p-6 rounded-xl border border-gray-100 dark:border-dark-border hover:border-blue-200 dark:hover:border-dark-accent hover:shadow-sm transition-all"
 >
-  <h2 class="text-lg font-semibold mb-2 text-gray-900 dark:text-dark-text">{title}</h2>
-  <p class="text-sm text-gray-500 dark:text-dark-muted mb-3 line-clamp-2">{description}</p>
+  <a href={href}>
+    <h2 class="text-lg font-semibold mb-2 text-gray-900 dark:text-dark-text">{title}</h2>
+    <p class="text-sm text-gray-500 dark:text-dark-muted mb-3 line-clamp-2">{description}</p>
+  </a>
   <div class="flex items-center gap-2 text-xs text-gray-400 dark:text-dark-subtle">
     <time datetime={pubDate.toISOString()}>
       {pubDate.toLocaleDateString(
@@ -27,9 +28,12 @@ const href = `/${lang}/blog/${post.slug}/`;
     {tags.length > 0 && (
       <span class="flex gap-1.5">
         {tags.map(tag => (
-          <span class="bg-gray-50 dark:bg-dark-surface px-2 py-0.5 rounded-full">{tag}</span>
+          <a
+            href={`/${lang}/blog/tags/${encodeURIComponent(tag)}/`}
+            class="bg-gray-50 dark:bg-dark-surface px-2 py-0.5 rounded-full hover:bg-gray-100 dark:hover:bg-dark-hover transition-colors"
+            >{tag}</a>
         ))}
       </span>
     )}
   </div>
-</a>
+</div>

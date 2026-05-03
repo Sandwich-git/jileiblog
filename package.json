@@ -6,15 +6,16 @@
   "description": "jilei.blog — Claude 使用心得与技术分享",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && pagefind --site dist",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.7.0",
-    "@tailwindcss/vite": "^4.1.0",
-    "tailwindcss": "^4.1.0",
     "@astrojs/rss": "^4.0.0",
-    "@astrojs/sitemap": "^3.0.0"
+    "@astrojs/sitemap": "^3.0.0",
+    "@tailwindcss/vite": "^4.1.0",
+    "astro": "^5.7.0",
+    "pagefind": "^1.5.2",
+    "tailwindcss": "^4.1.0"
   }
 }

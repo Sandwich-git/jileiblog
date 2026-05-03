@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Search from '@components/Search.astro';
 
 interface Props {
   title: string;
@@ -76,11 +77,22 @@ const hreflang = lang === 'zh' ? 'zh-CN' : 'en';
     </script>
   </head>
   <body class="bg-white dark:bg-dark-bg text-gray-900 dark:text-dark-text min-h-screen flex flex-col">
+    <Search />
     <slot name="header" />
     <main class="flex-1">
       <slot />
     </main>
     <slot name="footer" />
+    <button
+      id="back-to-top"
+      class="fixed bottom-8 right-8 z-50 p-3 rounded-full bg-white dark:bg-dark-surface border border-gray-200 dark:border-dark-border shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 invisible translate-y-4 cursor-pointer"
+      aria-label="回到顶部"
+      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600 dark:text-dark-muted">
+        <polyline points="18 15 12 9 6 15"/>
+      </svg>
+    </button>
     <script is:inline>
       window.__toggleTheme = function() {
         var isDark = document.documentElement.classList.toggle('dark');
@@ -91,6 +103,18 @@ const hreflang = lang === 'zh' ? 'zh-CN' : 'en';
           iframe.contentWindow.postMessage({ giscus: { setTheme: theme } }, 'https://giscus.app');
         }
       };
+    </script>
+    <script is:inline>
+      window.addEventListener('scroll', function() {
+        var btn = document.getElementById('back-to-top');
+        if (btn) {
+          if (window.scrollY > 300) {
+            btn.classList.remove('opacity-0', 'invisible', 'translate-y-4');
+          } else {
+            btn.classList.add('opacity-0', 'invisible', 'translate-y-4');
+          }
+        }
+      });
     </script>
   </body>
 </html>

@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(npm run *)",
-      "Bash(grep *)"
+      "Bash(grep *)",
+      "Bash(mv \"/d/workspace/blog/src/pages/[...lang]/blog/tags\" \"/d/workspace/blog/src/pages/[...lang]/blog/tags\")",
+      "Bash(rm -rf \"/d/workspace/blog/src/pages/[...lang\")"
     ]
   }
 }
