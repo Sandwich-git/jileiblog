@@ -66,12 +66,31 @@ const hreflang = lang === 'zh' ? 'zh-CN' : 'en';
     <link rel="alternate" hrefLang="x-default" href={`${site}/zh/`} />
 
     <title>{pageTitle}</title>
+    <script is:inline>
+      (function() {
+        var theme = localStorage.getItem('theme');
+        if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
   </head>
-  <body class="bg-white dark:bg-slate-900 text-gray-900 dark:text-slate-100 min-h-screen flex flex-col">
+  <body class="bg-white dark:bg-dark-bg text-gray-900 dark:text-dark-text min-h-screen flex flex-col">
     <slot name="header" />
     <main class="flex-1">
       <slot />
     </main>
     <slot name="footer" />
+    <script is:inline>
+      window.__toggleTheme = function() {
+        var isDark = document.documentElement.classList.toggle('dark');
+        var theme = isDark ? 'dark' : 'light';
+        localStorage.setItem('theme', theme);
+        var iframe = document.querySelector('iframe.giscus-frame');
+        if (iframe) {
+          iframe.contentWindow.postMessage({ giscus: { setTheme: theme } }, 'https://giscus.app');
+        }
+      };
+    </script>
   </body>
 </html>

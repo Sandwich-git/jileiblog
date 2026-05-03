@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-dark-bg: #161618;
+  --color-dark-surface: #1e1e22;
+  --color-dark-hover: #26262b;
+  --color-dark-border: #2d2d33;
+  --color-dark-text: #e8e8ed;
+  --color-dark-muted: #a1a1aa;
+  --color-dark-subtle: #6b6b78;
+  --color-dark-accent: #7ba3f5;
+  --color-dark-accent-hover: #9bb9ff;
+}
+
 /* 中文排版优化 */
 :root {
   --font-sans: -apple-system, 'PingFang SC', 'Microsoft YaHei',
@@ -80,24 +94,24 @@ article tr:last-child td {
 
 /* 暗色模式表格 */
 .dark article th, .dark article td {
-  border-color: #334155;
+  border-color: #2d2d33;
 }
 
 .dark article th {
-  background: #1e293b;
-  color: #e2e8f0;
+  background: #1e1e22;
+  color: #e8e8ed;
 }
 
 .dark article td {
-  color: #cbd5e1;
+  color: #a1a1aa;
 }
 
 /* 代码块 */
 pre {
   font-family: var(--font-mono);
   font-size: 0.875rem;
-  background: #1e293b;
-  color: #e2e8f0;
+  background: #1e1e22;
+  color: #e8e8ed;
   padding: 1rem;
   border-radius: 0.5rem;
   overflow-x: auto;
@@ -120,14 +134,14 @@ pre code {
 }
 
 /* 暗色模式 */
-.dark body { background: #0f172a; color: #e2e8f0; }
-.dark article p { color: #cbd5e1; }
-.dark article li { color: #cbd5e1; }
-.dark article h2 { border-bottom-color: #334155; }
-.dark code { background: #1e293b; }
-.dark article a { color: #60a5fa; }
-.dark article a:hover { color: #93bbfd; }
-.dark article blockquote { border-left-color: #475569; color: #94a3b8; }
+.dark body { background: #161618; color: #e8e8ed; }
+.dark article p { color: #a1a1aa; }
+.dark article li { color: #a1a1aa; }
+.dark article h2 { border-bottom-color: #2d2d33; }
+.dark code { background: #26262b; }
+.dark article a { color: #7ba3f5; }
+.dark article a:hover { color: #9bb9ff; }
+.dark article blockquote { border-left-color: #3d3d45; color: #6b6b78; }
 
 /* 响应式 */
 @media (max-width: 640px) {

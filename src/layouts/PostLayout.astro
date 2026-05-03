@@ -61,8 +61,8 @@ const authorName = 'jilei';
     <!-- 文章头部 -->
     <header class="max-w-[720px] mx-auto mb-10">
       <h1 class="text-3xl font-bold mb-3">{title}</h1>
-      <p class="text-gray-500 dark:text-slate-400 text-sm mb-4">{description}</p>
-      <div class="flex flex-wrap gap-2 items-center text-sm text-gray-400 dark:text-slate-500">
+      <p class="text-gray-500 dark:text-dark-muted text-sm mb-4">{description}</p>
+      <div class="flex flex-wrap gap-2 items-center text-sm text-gray-400 dark:text-dark-subtle">
         <time datetime={pubDate.toISOString()}>
           {pubDate.toLocaleDateString(
             lang === 'en' ? 'en-US' : 'zh-CN',
@@ -84,7 +84,7 @@ const authorName = 'jilei';
         {tags.length > 0 && (
           <div class="flex flex-wrap gap-1.5 mt-2 w-full">
             {tags.map(tag => (
-              <span class="bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400 px-2.5 py-0.5 rounded-full text-xs">
+              <span class="bg-gray-100 dark:bg-dark-surface text-gray-600 dark:text-dark-muted px-2.5 py-0.5 rounded-full text-xs">
                 {tag}
               </span>
             ))}
@@ -97,7 +97,7 @@ const authorName = 'jilei';
     <slot />
   </article>
 
-  <section class="max-w-[720px] mx-auto mt-16 pt-8 border-t border-gray-100 dark:border-slate-800">
+  <section class="max-w-[720px] mx-auto mt-16 pt-8 border-t border-gray-100 dark:border-dark-border">
     <div id="giscus-comments"></div>
     <script>
       var c = document.getElementById('giscus-comments');
@@ -113,7 +113,8 @@ const authorName = 'jilei';
         s.setAttribute('data-reactions-enabled','1');
         s.setAttribute('data-emit-metadata','0');
         s.setAttribute('data-input-position','top');
-        s.setAttribute('data-theme','preferred_color_scheme');
+        var savedTheme = localStorage.getItem('theme');
+        s.setAttribute('data-theme', savedTheme === 'dark' || savedTheme === 'light' ? savedTheme : 'preferred_color_scheme');
         s.setAttribute('data-lang','zh-CN');
         s.setAttribute('data-loading','lazy');
         s.setAttribute('crossorigin','anonymous');
