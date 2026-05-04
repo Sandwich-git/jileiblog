@@ -2,7 +2,7 @@
 title: "用 Claude Code 写博客是一种什么体验？人机协作效率实录"
 description: "从首页视觉设计到视频处理、搜索调试，记录一次真实的 Claude Code 人机协作过程，分享七个提升效率的协作技巧。"
 pubDate: 2026-05-04
-tags: ["Claude Code", "AI 编程", "人机协作", "Astro"]
+tags: ["Claude-Code", "AI-编程", "人机协作", "Astro"]
 ---
 
 最近用 Claude Code 重构了博客首页，从视觉设计到视频处理再到搜索调试，全程人机协作完成。这篇不聊概念，直接复盘我们具体做了什么、怎么配合的。

@@ -2,7 +2,7 @@
 title: "What It's Like to Blog with Claude Code? A Real Human-AI Collaboration Log"
 description: "From homepage visual design to video processing and search debugging — a real record of Claude Code human-AI collaboration, with 7 productivity tips."
 pubDate: 2026-05-04
-tags: ["Claude Code", "AI Programming", "Human-AI Collaboration", "Astro"]
+tags: ["Claude-Code", "AI-Programming", "Human-AI-Collaboration", "Astro"]
 ---
 
 I recently rebuilt my blog's homepage with Claude Code — visual design, video processing, search debugging, all done through human-AI collaboration. This post skips the abstract concepts and goes straight into what we actually did and how we worked together.
