@@ -46,7 +46,12 @@
       "PowerShell(Copy-Item *)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4324/pagefind/pagefind-entry.json)",
       "PowerShell(.\\\\deploy.ps1)",
-      "PowerShell(git *)"
+      "PowerShell(git *)",
+      "WebFetch(domain:jilei.blog)",
+      "Bash(curl -sL \"https://jilei.blog/zh/\")",
+      "Bash(curl -sL \"https://jilei.blog/_astro/_slug_.DEqNAmRe.css\")",
+      "Bash(curl -sL \"http://localhost:4321/zh/\")",
+      "Read(//tmp/**)"
     ]
   }
 }
