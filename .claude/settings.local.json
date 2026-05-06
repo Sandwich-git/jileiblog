@@ -52,7 +52,8 @@
       "Bash(curl -sL \"https://jilei.blog/_astro/_slug_.DEqNAmRe.css\")",
       "Bash(curl -sL \"http://localhost:4321/zh/\")",
       "Read(//tmp/**)",
-      "PowerShell(Move-Item *)"
+      "PowerShell(Move-Item *)",
+      "Bash(.\\\\deploy.ps1 *)"
     ]
   }
 }
